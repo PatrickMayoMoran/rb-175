@@ -19,6 +19,16 @@ def get_path(request_line)
 end
 
 def get_query_parameters(request_line)
+  query_string = request_line.split[1].split('?')[1]
+  query_parameters = query_string.split('&')
+
+  query_parameters_hash = {}
+  query_parameters.each do |p|
+    parameter, value = p.split('=')
+    query_parameters_hash[parameter] = value
+  end
+
+  query_parameters_hash
 end
 
 server = TCPServer.new(ENV["IP"], ENV["PORT"])
@@ -27,15 +37,11 @@ loop do
 
   request_line = client.gets
   puts request_line
-  "GET /_staticlocalhost:8080/?rolls=2&sides=6& HTTP/1.1"
+
   request_components = parse(request_line)
   http_method = request_components[:http_method]
   path = request_components[:path]
   query_parameters = request_components[:query_parameters]
-
-  puts http_method == "GET"
-  puts path == "/"
-  puts query_parameters == { "rolls"=>"2", "sides"=>"6"}
 
   client.puts request_line
   client.close
