@@ -1,13 +1,11 @@
 require "socket"
 
 def parse(request_line)
-  request_components = {}
+  http_method = get_method(request_line)
+  path = get_path(request_line)
+  query_parameters = get_query_parameters(request_line)
 
-  request_components[:http_method] = get_method(request_line)
-  request_components[:path] = get_path(request_line)
-  request_components[:query_parameters] = get_query_parameters(request_line)
-
-  request_components
+  return http_method, path, query_parameters
 end
 
 def get_method(request_line)
@@ -51,10 +49,7 @@ loop do
   request_line = client.gets
   puts request_line
 
-  request_components = parse(request_line)
-  http_method = request_components[:http_method]
-  path = request_components[:path]
-  query_parameters = request_components[:query_parameters]
+  http_method, path, query_parameters = parse(request_line)
 
   client.puts "HTTP/1.1 200 OK"
   client.puts "Content-Type: text/html\r\n\r\n"
