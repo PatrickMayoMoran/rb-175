@@ -35,6 +35,13 @@ end
 def roll_dice(query_parameters)
   rolls = query_parameters["rolls"].to_i
   sides = query_parameters["sides"].to_i
+
+  roll_results = []
+  rolls.times do
+    roll_results << rand(1..sides)
+  end
+
+  roll_results
 end
 
 server = TCPServer.new(ENV["IP"], ENV["PORT"])
