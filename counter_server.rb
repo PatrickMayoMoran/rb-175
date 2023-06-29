@@ -30,20 +30,6 @@ def get_query_parameters(request_line)
   query_parameters_hash
 end
 
-def roll_dice(query_parameters)
-  roll_results = []
-  return roll_results if query_parameters.nil?
-
-  rolls = query_parameters["rolls"].to_i
-  sides = query_parameters["sides"].to_i
-
-  rolls.times do
-    roll_results << rand(1..sides)
-  end
-
-  roll_results
-end
-
 server = TCPServer.new(ENV["IP"], ENV["PORT"])
 loop do
   client = server.accept
