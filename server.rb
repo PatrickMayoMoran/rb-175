@@ -33,7 +33,7 @@ def get_query_parameters(request_line)
 end
 
 def roll_dice(query_parameters)
-  "DICE ROLLED!!!"
+  rolls = query_parameters["rolls"].to_i
 end
 
 server = TCPServer.new(ENV["IP"], ENV["PORT"])
