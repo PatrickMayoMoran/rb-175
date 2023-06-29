@@ -44,12 +44,10 @@ loop do
   client.puts "<html>"
   client.puts "<body>"
 
+  number = query_parameters["counter"].to_i
   client.puts request_line
   client.puts "<h1>Counter</h1>"
-  rolls = roll_dice(query_parameters)
-  rolls.each do |roll|
-    client.puts "<p>", roll, "</p>"
-  end
+  client.puts "<p>The counter is #{number}.</p>"
 
   client.puts "</body>"
   client.puts "</html>"
