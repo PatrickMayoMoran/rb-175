@@ -45,7 +45,7 @@ loop do
   client.puts "<body>"
 
   client.puts request_line
-  client.puts "<h1>Rolls!</h1>"
+  client.puts "<h1>Counter</h1>"
   rolls = roll_dice(query_parameters)
   rolls.each do |roll|
     client.puts "<p>", roll, "</p>"
