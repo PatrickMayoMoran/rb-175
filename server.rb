@@ -63,8 +63,10 @@ loop do
 
   client.puts request_line
   client.puts "<h1>Rolls!</h1>"
-  roll_dice(query_parameters).each do |roll|
-    client.puts "<p>#{roll}</p>"
+  rolls = roll_dice(query_parameters)
+  client.puts rolls
+  rolls.each do |roll|
+    client.puts "<p>", roll, "</p>"
   end
 
   client.puts "</body>"
