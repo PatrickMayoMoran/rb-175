@@ -43,7 +43,7 @@ loop do
   client.puts "<html>"
   client.puts "<body>"
 
-  number = query_parameters["counter"].to_i
+  number = query_parameters["number"].to_i
   client.puts request_line
   client.puts "<h1>Counter</h1>"
   client.puts "<p>The counter is #{number}.</p>"
