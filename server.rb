@@ -38,11 +38,13 @@ loop do
   request_line = client.gets
   puts request_line
 
-  request_components = parse(request_line)
-  http_method = request_components[:http_method]
-  path = request_components[:path]
-  query_parameters = request_components[:query_parameters]
+  # request_components = parse(request_line)
+  # http_method = request_components[:http_method]
+  # path = request_components[:path]
+  # query_parameters = request_components[:query_parameters]
 
+  client.puts "HTTP/1.1 200 OK"
+  client.puts "Content-Type: text/plain\r\n\r\n"
   client.puts request_line
   client.close
 end
