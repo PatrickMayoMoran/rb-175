@@ -31,10 +31,12 @@ def get_query_parameters(request_line)
 end
 
 def roll_dice(query_parameters)
+  roll_results = []
+  return roll_results if query_parameters.nil?
+
   rolls = query_parameters["rolls"].to_i
   sides = query_parameters["sides"].to_i
 
-  roll_results = []
   rolls.times do
     roll_results << rand(1..sides)
   end
