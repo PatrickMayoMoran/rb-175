@@ -18,8 +18,7 @@ end
 
 def get_query_parameters(request_line)
   query_string = request_line.split[1].split('?')[1]
-  return if query_string.nil?
-  query_parameters = query_string.split('&')
+  query_parameters = (query_string|| "").split('&')
 
   query_parameters_hash = {}
   query_parameters.each do |p|
