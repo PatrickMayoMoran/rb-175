@@ -3,7 +3,7 @@ require "sinatra/reloader"
 require "tilt/erubis"
 
 get "/" do
-  #File.read "public/template.html"
   @title = "The Adventures of Sherlock Holmes"
+  @table_of_contents = File.read('data/toc.txt')
   erb :home
 end
