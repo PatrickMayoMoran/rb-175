@@ -12,4 +12,6 @@ get "/chapters/1" do
   @title = "Chapter 1"
   @table_of_contents = File.readlines('data/toc.txt')
   @chapter_1 = File.read('data/chp1.txt')
+
+  erb :chapter
 end
