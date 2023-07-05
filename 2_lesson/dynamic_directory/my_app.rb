@@ -3,8 +3,7 @@ require 'sinatra/reloader'
 require 'erubis'
 
 get '/' do
-  "Testing Dynamic Directory"
-  @files = Dir.glob('*')
+  @files = Dir.glob('public/*')
 
   erb :home
 end
