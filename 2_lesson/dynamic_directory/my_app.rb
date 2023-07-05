@@ -4,4 +4,5 @@ require 'erubis'
 
 get '/' do
   "Testing Dynamic Directory"
+  @files = Dir.glob('*')
 end
