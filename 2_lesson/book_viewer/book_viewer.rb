@@ -13,16 +13,7 @@ get "/" do
 end
 
 get "/search" do
-  @search_text = params[:query]
-  @matching_chapters = []
-
-  unless @search_text.nil?
-    @table_of_contents.each_with_index do |chapter, index|
-      chapter_text = File.read("data/chp#{index+1}.txt")
-      @matching_chapters << chapter if chapter_text.include?(@search_text)
-    end
-  end
-
+  @results = chapters_matching(params[:query])
 
   erb :search
 end
@@ -51,4 +42,24 @@ helpers do
       "<p>#{paragraph}</p>"
     end.join
   end
+end
+
+def each_chapter
+  @contents.each_with_index do |name, index|
+    number = index + 1
+    contents = File.read("data/chp#{number}.txt")
+    yield number, name, contents
+  end
+end
+
+def chapters_matching(query)
+  results = []
+
+  return results if !query || query.empty?
+
+  each_chapter do |number, name, contents|
+    results << {number: number, name: name} if contents.include?(query)
+  end
+
+  results
 end
