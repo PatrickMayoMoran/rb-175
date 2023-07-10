@@ -12,6 +12,10 @@ get "/" do
   erb :home
 end
 
+get "/search" do
+  erb :search
+end
+
 get "/chapters/:number" do
   chapter_number = params[:number].to_i
 
