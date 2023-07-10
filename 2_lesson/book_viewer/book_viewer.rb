@@ -14,6 +14,9 @@ end
 
 get "/chapters/:number" do
   chapter_number = params[:number].to_i
+
+  redirect "/" unless (1..@table_of_contents.size).cover? chapter_number
+
   chapter_name = @table_of_contents[chapter_number - 1]
   @title = "Chapter #{chapter_number}: #{chapter_name}"
 
