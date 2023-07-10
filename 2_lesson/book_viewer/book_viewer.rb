@@ -45,7 +45,7 @@ helpers do
 end
 
 def each_chapter
-  @contents.each_with_index do |name, index|
+  @table_of_contents.each_with_index do |name, index|
     number = index + 1
     contents = File.read("data/chp#{number}.txt")
     yield number, name, contents
