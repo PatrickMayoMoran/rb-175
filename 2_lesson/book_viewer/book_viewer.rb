@@ -13,6 +13,17 @@ get "/" do
 end
 
 get "/search" do
+  @search_text = params[:query]
+  @matching_chapters = []
+
+  unless @search_text.nil?
+    @table_of_contents.each_with_index do |chapter, index|
+      chapter_text = File.read("data/chp#{index+1}.txt")
+      @matching_chapters << chapter if chapter_text.include?(@search_text)
+    end
+  end
+
+
   erb :search
 end
 
