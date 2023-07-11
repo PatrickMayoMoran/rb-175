@@ -14,10 +14,12 @@
     <ul>
       <% @results.each do |result| %>
         <li>
-          <a href="/chapters/<%= result[:number] %>"><%= result[:name] %></a>
+          <h4><%= result[:name] %></h4>
           <ul>
             <% result[:matching_paragraphs].each do |paragraph| %>
-                <li><a href="/chapters/<%= result[:number] %>/#<%= paragraph[:id] %>"><%= paragraph[:paragraph] %></a></li>
+                <li>
+                  <a href="/chapters/<%= result[:number] %>#<%= paragraph[:id] %>"><%= paragraph[:paragraph] %></a>
+                </li>
             <% end %>
           </ul>
         </li>
