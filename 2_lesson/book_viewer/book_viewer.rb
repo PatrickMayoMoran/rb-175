@@ -39,7 +39,7 @@ helpers do
   def in_paragraphs(text)
     paragraphs = text.split("\n\n")
     paragraphs.map.with_index do |paragraph, i|
-      "<p id=\"#{i}\">#{paragraph}</p>"
+      "<p id=paragraph\"#{i}\">#{paragraph}</p>"
     end.join
   end
 end
@@ -58,11 +58,11 @@ def chapters_matching(query)
   return results if !query || query.empty?
 
   each_chapter do |number, name, contents|
-    matching_paragraphs = []
+    matching_paragraphs = {}
     contents.split("\n\n").each_with_index do |paragraph, i|
-      matching_paragraphs << {paragraph: paragraph, id: i} if paragraph.include?(query)
+      matching_paragraphs[i] =  paragraph if paragraph.include?(query)
     end
-    
+
     results << {number: number, name: name, matching_paragraphs: matching_paragraphs} unless matching_paragraphs.empty?
   end
 
