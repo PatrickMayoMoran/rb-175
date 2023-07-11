@@ -42,6 +42,10 @@ helpers do
       "<p id=paragraph\"#{i}\">#{paragraph}</p>"
     end.join
   end
+
+  def highlight_result(query, paragraph)
+    paragraph.split(query).join("<strong>#{query}</strong>")
+  end
 end
 
 def each_chapter
