@@ -38,8 +38,8 @@ end
 helpers do
   def in_paragraphs(text)
     paragraphs = text.split("\n\n")
-    paragraphs.map do |paragraph|
-      "<p>#{paragraph}</p>"
+    paragraphs.map.with_index do |paragraph, i|
+      "<p id=\"#{i}\">#{paragraph}</p>"
     end.join
   end
 end
