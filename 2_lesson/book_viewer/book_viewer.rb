@@ -58,7 +58,12 @@ def chapters_matching(query)
   return results if !query || query.empty?
 
   each_chapter do |number, name, contents|
-    results << {number: number, name: name} if contents.include?(query)
+    matching_paragraphs = []
+    contents.split("\n\n").each_with_index do |paragraph, i|
+      matching_paragraphs << {paragraph: paragraph, id: i} if paragraph.include?(query)
+    end
+    
+    results << {number: number, name: name, matching_paragraphs: matching_paragraphs} unless matching_paragraphs.empty?
   end
 
   results
