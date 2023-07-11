@@ -16,9 +16,9 @@
         <li>
           <h4><%= result[:name] %></h4>
           <ul>
-            <% result[:matching_paragraphs].each do |paragraph| %>
+            <% result[:matching_paragraphs].each do |index, paragraph| %>
                 <li>
-                  <a href="/chapters/<%= result[:number] %>#<%= paragraph[:id] %>"><%= paragraph[:paragraph] %></a>
+                  <a href="/chapters/<%= result[:number] %>#<%= index %>"><%= paragraph %></a>
                 </li>
             <% end %>
           </ul>
