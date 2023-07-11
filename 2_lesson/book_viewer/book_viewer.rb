@@ -44,7 +44,7 @@ helpers do
   end
 
   def highlight_result(query, paragraph)
-    paragraph.split(query).join("<strong>#{query}</strong>")
+    paragraph.gsub(query, "<strong>#{query}</strong>")
   end
 end
 
