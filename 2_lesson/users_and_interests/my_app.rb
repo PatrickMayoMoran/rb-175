@@ -23,4 +23,10 @@ helpers do
       "<li><a href=\"/#{user}\">#{user}</a></li>"
     end.join
   end
+
+  def display_user(user, users)
+    info = users[user]
+    info.each do |key, value|
+    end
+  end
 end
