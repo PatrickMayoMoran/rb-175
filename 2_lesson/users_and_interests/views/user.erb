@@ -2,7 +2,14 @@
 
 <h1><%= @user.to_s %></h1>
 
-<h3> Email Address: </h3>
+<h3>Email Address: </h3>
 <ul>
   <li><%= info[:email] %></li>
+</ul>
+
+<h3>Interests:</h3>
+<ul>
+  <% info[:interests].each do |interest| %>
+    <li><%= interest %></li>
+  <% end %>
 </ul>
