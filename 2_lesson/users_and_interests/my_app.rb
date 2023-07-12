@@ -12,5 +12,9 @@ get '/' do
 end
 
 helpers do
-  
+  def display_users(users)
+    users.keys.map do |user|
+      "<li><a href=\"/#{user}\">#{user}</a></li>"
+    end.join
+  end
 end
