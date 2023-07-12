@@ -20,8 +20,12 @@ end
 helpers do
   def display_users(users)
     users.keys.map do |user|
-      "<li><a href=\"/#{user}\">#{user}</a></li>"
+      display_user(user)
     end.join
+  end
+
+  def display_user(user)
+    "<li><a href=\"/#{user}\">#{user}</a></li>"
   end
 
 end
