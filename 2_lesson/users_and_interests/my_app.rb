@@ -24,9 +24,7 @@ helpers do
     end.join
   end
 
-  def display_user(user, users)
+  def get_user_info(user, users)
     info = users[user]
-    info.each do |key, value|
-    end
   end
 end
