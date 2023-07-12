@@ -6,6 +6,9 @@
 
 <body>
   <%= yield %>
+  <p>
+    There are <%= @users.count %> users with a total of <%= count_interests(@users) %> interests.
+  </p>
 </body>
 </html>
 

@@ -28,4 +28,13 @@ helpers do
     "<li><a href=\"/#{user}\">#{user}</a></li>"
   end
 
+  def count_interests(users)
+    interests = 0
+    users.each do |user, hash|
+      interests += hash[:interests].count
+    end
+
+    interests
+  end
+
 end

@@ -12,11 +12,12 @@
   <li><%= info[:interests].join(", ") %></li>
 </ul>
 
-<nav>
+<footer>
+  <h3>Other Users</h3>
   <ul>
     <% @users.each_key do |user| %>
       <% next if user == @user %>
-      <li><%= display_user(user) %></li>
+      <%= display_user(user) %>
     <% end %>
   </ul>
-</nav>
+</footer>
