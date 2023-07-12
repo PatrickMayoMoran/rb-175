@@ -11,6 +11,12 @@ get '/' do
   erb :index
 end
 
+get '/:user' do
+  @user = params[:user]
+
+  erb :user
+end
+
 helpers do
   def display_users(users)
     users.keys.map do |user|
