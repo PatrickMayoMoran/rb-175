@@ -29,12 +29,9 @@ helpers do
   end
 
   def count_interests(users)
-    interests = 0
-    users.each do |user, hash|
-      interests += hash[:interests].count
+    users.reduce(0) do |sum, (user,hash)|
+      sum + hash[:interests].count
     end
-
-    interests
   end
 
 end
