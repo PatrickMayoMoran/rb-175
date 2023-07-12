@@ -12,7 +12,7 @@ get '/' do
 end
 
 get '/:user' do
-  @user = params[:user]
+  @user = params[:user].to_sym
 
   erb :user
 end
