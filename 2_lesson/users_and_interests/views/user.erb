@@ -11,3 +11,11 @@
 <ul>
   <li><%= info[:interests].join(", ") %></li>
 </ul>
+
+<nav>
+  <ul>
+    <% @users.each_key do |user| %>
+      <li><%= display_user(user) unless user == @user %></li>
+    <% end %>
+  </ul>
+</nav>
