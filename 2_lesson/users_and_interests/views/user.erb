@@ -15,7 +15,8 @@
 <nav>
   <ul>
     <% @users.each_key do |user| %>
-      <li><%= display_user(user) unless user == @user %></li>
+      <% next if user == @user %>
+      <li><%= display_user(user) %></li>
     <% end %>
   </ul>
 </nav>
