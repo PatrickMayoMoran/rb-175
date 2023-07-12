@@ -24,7 +24,4 @@ helpers do
     end.join
   end
 
-  def get_user_info(user, users)
-    info = users[user]
-  end
 end
