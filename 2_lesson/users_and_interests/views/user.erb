@@ -9,7 +9,5 @@
 
 <h3>Interests:</h3>
 <ul>
-  <% info[:interests].each do |interest| %>
-    <li><%= interest %></li>
-  <% end %>
+  <li><%= info[:interests].join(", ") %></li>
 </ul>
