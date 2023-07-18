@@ -48,3 +48,8 @@ def error_for_list_name(list_name)
     "The list name must be between 1 and 100 characters."
   end
 end
+
+get "/lists/:id" do
+  list = session[:lists][params[:id]]
+  erb :todo_list, layout: :layout
+end
