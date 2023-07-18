@@ -29,7 +29,10 @@ end
 # Create a new list
 post "/lists" do
   list_name = params[:list_name].strip
-  if (1..100).cover? list_name.size
+  if session[:lists].any? {|list| list[:name] == list_name}
+    session[:error] = "That list name is already taken - please choose a different name"
+    erb :new_list, layout: :layout
+  elsif (1..100).cover? list_name.size
     session[:lists] << {name: list_name, todos: []}
     session[:success] = "The list has been created."
     redirect "/lists"
