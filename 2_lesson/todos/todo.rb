@@ -2,7 +2,7 @@ require "sinatra"
 require "sinatra/reloader"
 require "tilt/erubis"
 
-get "/" do
+get "/lists" do
   @lists = [
     {name: "Lunch", todos: []},
     {name: "Dinner Groceries", todos: []}
