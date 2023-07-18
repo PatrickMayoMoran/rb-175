@@ -7,14 +7,15 @@ configure do
   set :session_secret, SecureRandom.hex(32)
 end
 
+before do
+  session[:lists] ||= []
+end
+
 get "/" do
   redirect "/lists"
 end
 
 get "/lists" do
-  @lists = [
-    {name: "Lunch", todos: []},
-    {name: "Dinner Groceries", todos: []}
-  ]
+  @lists = session[:lists]
   erb :lists, layout: :layout
 end
