@@ -3,6 +3,10 @@ require "sinatra/reloader"
 require "tilt/erubis"
 
 get "/" do
-  erb "You have no lists.", layout: :layout
+  @lists = [
+    {name: "Lunch"},
+    {name: "Dinner Groceries"}
+  ]
+  erb :lists, layout: :layout
 end
-set :session_secret, SecureRandom.hex(32)
+# set :session_secret, SecureRandom.hex(32)
