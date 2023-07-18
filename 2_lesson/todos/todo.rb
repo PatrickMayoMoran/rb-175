@@ -29,15 +29,22 @@ end
 # Create a new list
 post "/lists" do
   list_name = params[:list_name].strip
-  if session[:lists].any? {|list| list[:name] == list_name}
-    session[:error] = "That list name is already taken - please choose a different name"
-    erb :new_list, layout: :layout
-  elsif !(1..100).cover? list_name.size
-    session[:error] = "The list name must be between 1 and 100 characters."
+  error = error_for_list_name(list_name)
+
+  if error
+    session[:error] = error
     erb :new_list, layout: :layout
   else
     session[:lists] << {name: list_name, todos: []}
     session[:success] = "The list has been created."
     redirect "/lists"
+  end
+end
+
+def error_for_list_name(list_name)
+  if session[:lists].any? {|list| list[:name] == list_name}
+    "That list name is already taken - please choose a different name"
+  elsif !(1..100).cover? list_name.size
+    "The list name must be between 1 and 100 characters."
   end
 end
