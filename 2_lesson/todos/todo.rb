@@ -28,9 +28,9 @@ end
 
 # Create a new list
 post "/lists" do
-  list_name = params[:list_name]
+  list_name = params[:list_name].strip
   if (1..100).cover? list_name.size
-    session[:lists] << {name: params[:list_name], todos: []}
+    session[:lists] << {name: list_name, todos: []}
     session[:success] = "The list has been created."
     redirect "/lists"
   else
