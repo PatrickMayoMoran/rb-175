@@ -2,6 +2,10 @@ require "sinatra"
 require "sinatra/reloader"
 require "tilt/erubis"
 
+get "/" do
+  redirect "/lists"
+end
+
 get "/lists" do
   @lists = [
     {name: "Lunch", todos: []},
