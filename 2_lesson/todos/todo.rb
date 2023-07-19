@@ -50,6 +50,7 @@ def error_for_list_name(list_name)
 end
 
 get "/lists/:id" do
-  list = session[:lists][params[:id]]
-  erb :todo_list, layout: :layout
+  id = params[:id].to_i
+  @list = session[:lists][id]
+  erb :list, layout: :layout
 end
