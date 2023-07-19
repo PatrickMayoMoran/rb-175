@@ -55,3 +55,9 @@ get "/lists/:id" do
   @list = session[:lists][id]
   erb :list, layout: :layout
 end
+
+get "/lists/:id/edit" do
+  id = params[:id].to_i
+  @list = session[:lists][id]
+  erb :edit_list, layout: :layout
+end
