@@ -61,3 +61,6 @@ get "/lists/:id/edit" do
   @list = session[:lists][id]
   erb :edit_list, layout: :layout
 end
+
+post "/lists/:id" do
+end
