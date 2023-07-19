@@ -63,4 +63,17 @@ get "/lists/:id/edit" do
 end
 
 post "/lists/:id" do
+  list_name = params[:list_name].strip
+  id = params[:id].to_i
+  @list = session[:lists][id]
+
+  error = error_for_list_name(list_name)
+  if error
+    session[:error] = error
+    erb :edit_list, layout: :layout
+  else
+    @list[:name] = list_name
+    session[:success] = "The list name has been changed."
+    redirect "/lists/#{id}"
+  end
 end
