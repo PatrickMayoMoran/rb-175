@@ -92,9 +92,9 @@ end
 # Delete a single todo from a list
 post "/lists/:list_id/todos/:todo_id/delete" do
   @list_id = params[:list_id].to_i
-  @todo_id = params[:todo_id].to_i
-  list = session[:lists][@list_id]
-  list[:todos].delete_at(@todo_id)
+  todo_id = params[:todo_id].to_i
+  @list = session[:lists][@list_id]
+  @list[:todos].delete_at(todo_id)
   
   session[:success] = "The todo has been deleted."
   redirect "/lists/#{@list_id}"
