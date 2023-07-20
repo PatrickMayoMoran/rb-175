@@ -51,8 +51,8 @@ def error_for_list_name(name)
 end
 
 get "/lists/:id" do
-  id = params[:id].to_i
-  @list = session[:lists][id]
+  @list_id = params[:id].to_i
+  @list = session[:lists][@list_id]
   erb :list, layout: :layout
 end
 
@@ -64,8 +64,8 @@ end
 
 post "/lists/:id" do
   list_name = params[:list_name].strip
-  id = params[:id].to_i
-  @list = session[:lists][id]
+  @list_id = params[:id].to_i
+  @list = session[:lists][@list_id]
 
   error = error_for_list_name(list_name)
   if error
@@ -74,7 +74,7 @@ post "/lists/:id" do
   else
     @list[:name] = list_name
     session[:success] = "The list name has been changed."
-    redirect "/lists/#{id}"
+    redirect "/lists/#{@list_id}"
   end
 end
 
@@ -87,8 +87,8 @@ end
 
 post "/lists/:list_id/todos" do
   todo_name = params[:todo].strip
-  list_id = params[:list_id].to_i
-  @list = session[:lists][list_id]
+  @list_id = params[:list_id].to_i
+  @list = session[:lists][@list_id]
 
   error = error_for_todo(todo_name, @list)
   if error
