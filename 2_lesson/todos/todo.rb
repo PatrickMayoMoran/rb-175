@@ -50,18 +50,21 @@ def error_for_list_name(name)
   end
 end
 
+# View single todo list
 get "/lists/:id" do
   @list_id = params[:id].to_i
   @list = session[:lists][@list_id]
   erb :list, layout: :layout
 end
 
+# Render page to edit list name
 get "/lists/:id/edit" do
   id = params[:id].to_i
   @list = session[:lists][id]
   erb :edit_list, layout: :layout
 end
 
+# Change a list name
 post "/lists/:id" do
   list_name = params[:list_name].strip
   @list_id = params[:id].to_i
@@ -78,6 +81,7 @@ post "/lists/:id" do
   end
 end
 
+# Delete a todo list
 post "/lists/:id/delete" do
   id = params[:id].to_i
   session[:lists].delete_at(id)
@@ -85,7 +89,8 @@ post "/lists/:id/delete" do
   redirect "/lists"
 end
 
-post "/lists/:list_id/:todo_id/delete" do
+# Delete a single todo from a list
+post "/lists/:list_id/todos/:todo_id/delete" do
   @list_id = params[:list_id].to_i
   @todo_id = params[:todo_id].to_i
   list = session[:lists][@list_id]
@@ -95,6 +100,7 @@ post "/lists/:list_id/:todo_id/delete" do
   redirect "/lists/#{@list_id}"
 end
 
+# Add a todo to a list
 post "/lists/:list_id/todos" do
   todo_name = params[:todo].strip
   @list_id = params[:list_id].to_i
