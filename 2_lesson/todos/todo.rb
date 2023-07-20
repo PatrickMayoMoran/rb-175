@@ -42,10 +42,10 @@ post "/lists" do
   end
 end
 
-def error_for_list_name(list_name)
-  if session[:lists].any? {|list| list[:name] == list_name}
+def error_for_list_name(name)
+  if session[:lists].any? {|list| list[:name] == name}
     "That list name is already taken - please choose a different name"
-  elsif !(1..100).cover? list_name.size
+  elsif !(1..100).cover? name.size
     "The list name must be between 1 and 100 characters."
   end
 end
