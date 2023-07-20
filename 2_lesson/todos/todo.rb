@@ -102,10 +102,8 @@ post "/lists/:list_id/todos" do
   end
 end
 
-def error_for_todo(todo_name, list)
-  if list[:todos].any? {|t| t[:name] == todo_name}
-    "That todo name is already taken - please choose a different name"
-  elsif !(1..100).cover? todo_name.size
+def error_for_todo(name, list)
+  if !(1..100).cover? name.size
     "The todo name must be between 1 and 100 characters."
   end
 end
