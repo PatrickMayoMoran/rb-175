@@ -1,11 +1,11 @@
-<ul>
-  <li>
+<section id="todos">
+  <header>
     <h2>Editing <%= @list[:name] %></h2>
-    <a href="/lists/<%= params[:id] %>/delete">
-      <p>Delete</p>
-    </a>
-  </li>
-</ul>
+    <ul>
+      <li><a class="delete" href="/lists/<%= params[:id] %>/delete">Delete List</a></li>
+    </ul>
+  </header>
+</section>
 
 <form action="/lists/<%= params[:id] %>" method="post">
   <dl>
