@@ -86,9 +86,9 @@ post "/lists/:id/delete" do
 end
 
 post "/lists/:list_id/todos" do
-  todo = params[:name]
+  todo = params[:todo]
   list_id = params[:list_id].to_i
-  @list = session[:lists][id]
+  @list = session[:lists][list_id]
 
   @list[:todos] << {name: todo, completed: false}
   session[:success] = "#{todo} added to the list."
