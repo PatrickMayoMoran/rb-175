@@ -123,3 +123,7 @@ def error_for_todo(name, list)
     "The todo name must be between 1 and 100 characters."
   end
 end
+
+# Check off single todo item
+post "/lists/:list_id/todos/:todo_id/complete" do
+end
