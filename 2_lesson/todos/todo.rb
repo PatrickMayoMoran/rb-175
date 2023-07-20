@@ -81,5 +81,5 @@ end
 post "/lists/:id/delete" do
   id = params[:id].to_i
   session[:lists].delete_at(id)
-  redirect "/lists
+  redirect "/lists"
 end
