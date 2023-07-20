@@ -84,3 +84,14 @@ post "/lists/:id/delete" do
   session[:success] = "The list has been deleted."
   redirect "/lists"
 end
+
+post "/lists/:id/todos" do
+  todo = params[:name]
+  id = params[:id].to_i
+  @list = session[:lists][id]
+
+  @list[:todos] << todo
+  session[:success] = "#{todo} added to the list."
+
+  redirect "/lists/:id"
+end
