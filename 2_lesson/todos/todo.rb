@@ -86,12 +86,26 @@ post "/lists/:id/delete" do
 end
 
 post "/lists/:list_id/todos" do
-  todo = params[:todo]
+  todo_name = params[:todo].strip
   list_id = params[:list_id].to_i
   @list = session[:lists][list_id]
 
-  @list[:todos] << {name: todo, completed: false}
-  session[:success] = "#{todo} added to the list."
+  error = error_for_todo(todo_name, @list)
+  if error
+    session[:error] = error
+    erb :list, layout: :layout
+  else
+    @list[:todos] << {name: todo_name, completed: false}
+    session[:success] = "#{todo_name} added to the list."
 
-  redirect "/lists/:list_id"
+    redirect "/lists/:list_id"
+  end
+end
+
+def error_for_todo(todo_name, list)
+  if list[:todos].any? {|t| t[:name] == todo_name}
+    "That todo name is already taken - please choose a different name"
+  elsif !(1..100).cover? todo_name.size
+    "The todo name must be between 1 and 100 characters."
+  end
 end
