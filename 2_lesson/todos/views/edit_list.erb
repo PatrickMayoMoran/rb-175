@@ -1,3 +1,12 @@
+<ul>
+  <li>
+    <h2>Editing <%= list[:name] %></h2>
+    <a href="/lists/<%= params[:id] %>/delete">
+      <p>Delete</p>
+    </a>
+  </li>
+</ul>
+
 <form action="/lists/<%= params[:id] %>" method="post">
   <dl>
     <dt>
