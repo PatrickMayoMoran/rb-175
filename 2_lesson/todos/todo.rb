@@ -125,12 +125,13 @@ def error_for_todo(name, list)
 end
 
 # Check off single todo item
-post "/lists/:list_id/todos/:todo_id/complete" do
+post "/lists/:list_id/todos/:todo_id" do
   @list_id = params[:list_id].to_i
   @list = session[:lists][@list_id]
   todo_id = params[:todo_id].to_i
   todo = @list[:todos][todo_id]
 
-  todo[:completed] = todo[:completed] ? false : true
+  is_complete = todo[:completed] == "true"
+  todo[:completed] = is_complete
   redirect "/lists/@list_id"
 end
