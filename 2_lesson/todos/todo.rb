@@ -93,5 +93,5 @@ post "/lists/:list_id/todos" do
   @list[:todos] << {name: todo, completed: false}
   session[:success] = "#{todo} added to the list."
 
-  redirect "/lists/:id"
+  redirect "/lists/:list_id"
 end
