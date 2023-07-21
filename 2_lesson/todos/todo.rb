@@ -138,7 +138,7 @@ post "/lists/:list_id/todos/:todo_id" do
 end
 
 # Complete all todos
-post "/lists/:list_id/todos/complete" do
+post "/lists/:list_id/complete" do
   @list_id = params[:list_id].to_i
   @list = session[:lists][@list_id]
   @list[:todos].each {|todo| todo[:completed] = true}
