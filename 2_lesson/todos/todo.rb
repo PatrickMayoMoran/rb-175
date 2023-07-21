@@ -146,3 +146,12 @@ post "/lists/:list_id/complete" do
   session[:success] = "All todos have been completed"
   redirect "/lists/#{@list_id}"
 end
+
+helpers do
+  def display_remaining_todos(list)
+    total = list[:todos].size
+    complete = list[:todos].count {|t| t[:completed] == true}
+    remaining = total - complete
+    "#{remaining} / #{total}"
+  end
+end
