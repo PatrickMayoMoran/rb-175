@@ -157,7 +157,7 @@ helpers do
 
   def display_list_complete(list)
     todos_complete = list[:todos].all? {|t| t[:completed] == true} 
-    at_least_one = list.size > 0
+    at_least_one = list[:todos].size > 0
     if todos_complete && at_least_one
       return "class=\"complete\""
     end
