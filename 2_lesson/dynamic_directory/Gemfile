@@ -1,7 +1,0 @@
-source 'https://rubygems.org'
-
-ruby '3.2.0'
-require 'sinatra'
-require 'sinatra/reloader'
-require 'erubis'
-require 'webrick'
