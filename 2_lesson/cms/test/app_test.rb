@@ -16,11 +16,13 @@ class AppTest < Minitest::Test
     get "/"
 
     assert_equal(200, last_response.status)
+    assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
   end
 
   def test_history
     get "/history.txt"
 
     assert_equal(200, last_response.status)
+    assert_equal("text/plain", last_response["Content-Type"])
   end
 end
