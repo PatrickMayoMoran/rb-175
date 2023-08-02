@@ -19,11 +19,15 @@ get "/" do
 end
 
 get "/:filename" do
-  file_path = root + "/data/" + params[:filename]
+  filename = params[:filename]
+  file_path = root + "/data/" + filename
+  file_exists = File.file?(file_path)
 
-  session[:error] = "#{params[:filename]} does not exist."
-  redirect "/"
-
-  headers["Content-Type"] = "text/plain"
-  File.read(file_path)
+  if file_exists
+    headers["Content-Type"] = "text/plain"
+    File.read(file_path)
+  else
+    session[:error] = "#{filename} does not exist."
+    redirect "/"
+  end
 end
