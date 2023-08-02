@@ -17,6 +17,11 @@ class AppTest < Minitest::Test
 
     assert_equal(200, last_response.status)
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
+
+    files = ["history.txt", "about.txt", "changes.txt"]
+    files.each do |file|
+      assert_equal(true, last_response.body.include?(file))
+    end
   end
 
   def test_history
