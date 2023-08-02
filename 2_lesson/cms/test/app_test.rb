@@ -26,8 +26,11 @@ class AppTest < Minitest::Test
 
   def test_history
     get "/history.txt"
+    root = File.expand_path("../..", __FILE__)
+    file = File.read(root + "/data/history.txt")
 
     assert_equal(200, last_response.status)
     assert_equal("text/plain", last_response["Content-Type"])
+    assert_equal(file, last_response.body)
   end
 end
