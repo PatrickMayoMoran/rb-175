@@ -10,6 +10,22 @@ configure do
   set :erb, :escape_html => true
 end
 
+def render_markdown(text)
+  markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  markdown.render(text)
+end
+
+def load_file_content(path)
+  content = File.read(path)
+  case File.extname(path)
+    when ".txt"
+      headers["Content-type"] = "text/plain"
+      content
+    when ".md"
+      render_markdown(content)
+  end
+end
+
 root = File.expand_path("..", __FILE__)
 
 get "/" do
@@ -25,14 +41,7 @@ get "/:filename" do
   file_exists = File.file?(file_path)
 
   if file_exists
-    if file_path.end_with?(".md")
-      headers["Content-Type"] = "text/html"
-      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-      markdown.render(File.read(file_path))
-    else
-      headers["Content-Type"] = "text/plain"
-      File.read(file_path)
-    end
+    load_file_content(file_path)
   else
     session[:error] = "#{filename} does not exist."
     redirect "/"
