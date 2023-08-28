@@ -26,7 +26,12 @@ get "/:filename" do
 
   if file_exists
     headers["Content-Type"] = "text/plain"
-    File.read(file_path)
+    if file_path.end_with?(".md")
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+      markdown.render(File.read(file_path))
+    else
+      File.read(file_path)
+    end
   else
     session[:error] = "#{filename} does not exist."
     redirect "/"
