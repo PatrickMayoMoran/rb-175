@@ -18,7 +18,7 @@ class AppTest < Minitest::Test
     assert_equal(200, last_response.status)
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
 
-    files = ["history.txt", "about.txt", "changes.txt"]
+    files = ["history.txt", "about.md", "changes.txt"]
     files.each do |file|
       assert_equal(true, last_response.body.include?(file))
     end
@@ -46,5 +46,14 @@ class AppTest < Minitest::Test
 
     get "/"
     refute_includes(last_response.body, "not_a_document.txt does not exist")
+  end
+
+# test/cms_test.rb
+  def test_viewing_markdown_document
+    get "/about.md"
+
+    assert_equal 200, last_response.status
+    assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
+    assert_includes last_response.body, "<h1>Ruby is...</h1>"
   end
 end
