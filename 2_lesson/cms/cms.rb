@@ -43,7 +43,7 @@ get "/:filename" do
   if file_exists
     load_file_content(file_path)
   else
-    session[:error] = "#{filename} does not exist."
+    session[:message] = "#{filename} does not exist."
     redirect "/"
   end
 end
