@@ -25,11 +25,12 @@ get "/:filename" do
   file_exists = File.file?(file_path)
 
   if file_exists
-    headers["Content-Type"] = "text/plain"
     if file_path.end_with?(".md")
+      headers["Content-Type"] = "text/html"
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
       markdown.render(File.read(file_path))
     else
+      headers["Content-Type"] = "text/plain"
       File.read(file_path)
     end
   else
