@@ -28,21 +28,27 @@ class AppTest < Minitest::Test
   end
 
   def test_index
+    files = ["history.txt", "about.md", "changes.txt"]
+    files.each do |file|
+      create_document(file)
+    end
+
     get "/"
 
     assert_equal(200, last_response.status)
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
 
-    files = ["history.txt", "about.md", "changes.txt"]
     files.each do |file|
       assert_equal(true, last_response.body.include?(file))
     end
   end
 
   def test_history
+    create_document "history.txt"
     get "/history.txt"
-    root = File.expand_path("../..", __FILE__)
-    file = File.read(root + "/data/history.txt")
+
+    path = data_path
+    file = File.read(File.join(path, "history.txt"))
 
     assert_equal(200, last_response.status)
     assert_equal("text/plain", last_response["Content-Type"])
