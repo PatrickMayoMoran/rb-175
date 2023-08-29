@@ -10,6 +10,15 @@ configure do
   set :erb, :escape_html => true
 end
 
+# cms.rb
+def data_path
+  if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/data", __FILE__)
+  else
+    File.expand_path("../data", __FILE__)
+  end
+end
+
 def render_markdown(text)
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
   markdown.render(text)
@@ -26,10 +35,9 @@ def load_file_content(path)
   end
 end
 
-root = File.expand_path("..", __FILE__)
-
 get "/" do
-  @files = Dir.glob(root + '/data/*').map do |path|
+  pattern = File.join(data_path, "*")
+  @files = Dir.glob(pattern).map do |path|
     File.basename(path)
   end
   erb :index
@@ -37,7 +45,7 @@ end
 
 get "/:filename" do
   filename = params[:filename]
-  file_path = root + "/data/" + filename
+  file_path = File.join(data_path, filename)
   file_exists = File.file?(file_path)
 
   if file_exists
@@ -49,7 +57,7 @@ get "/:filename" do
 end
 
 get "/:filename/edit" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
 
   @filename = params[:filename]
   @content = File.read(file_path)
@@ -58,7 +66,7 @@ get "/:filename/edit" do
 end
 
 post "/:filename" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
 
   File.write(file_path, params[:content])
 
