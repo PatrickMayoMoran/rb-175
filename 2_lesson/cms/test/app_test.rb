@@ -71,7 +71,7 @@ class AppTest < Minitest::Test
 
 # test/cms_test.rb
   def test_viewing_markdown_document
-    create_document("about.md", "<h1>Ruby is...</h1>")
+    create_document("about.md", "# Ruby is...")
     get "/about.md"
 
     assert_equal 200, last_response.status
