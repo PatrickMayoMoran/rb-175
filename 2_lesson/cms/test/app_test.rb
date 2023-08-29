@@ -80,6 +80,7 @@ class AppTest < Minitest::Test
 
 # test/cms_test.rb
   def test_editing_document
+    create_document "changes.txt"
     get "/changes.txt/edit"
 
     assert_equal 200, last_response.status
