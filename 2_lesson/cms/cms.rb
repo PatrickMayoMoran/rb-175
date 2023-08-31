@@ -69,6 +69,21 @@ get "/:filename/edit" do
   erb :edit
 end
 
+post "/new" do
+
+  document = params[:new].strip
+  if document.empty?
+    session[:message] = "A name is required"
+    redirect "/new"
+  else
+    file_path = File.join(data_path, document)
+
+    FileUtils.touch(file_path)
+    session[:message] = "#{document} was created."
+    redirect "/"
+  end
+end
+
 post "/:filename" do
   file_path = File.join(data_path, params[:filename])
 
