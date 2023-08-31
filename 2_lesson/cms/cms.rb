@@ -43,6 +43,10 @@ get "/" do
   erb :index
 end
 
+get "/new" do
+  erb :new
+end
+
 get "/:filename" do
   filename = params[:filename]
   file_path = File.join(data_path, filename)
@@ -73,3 +77,4 @@ post "/:filename" do
   session[:message] = "#{params[:filename]} has been updated."
   redirect "/"
 end
+
