@@ -110,4 +110,15 @@ class AppTest < Minitest::Test
     assert_includes last_response.body, "<input"
     assert_includes last_response.body, %q(<button type="submit")
   end
+
+  def test_create_new_document
+    post "/new", new: "tiny_cat.txt"
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_includes last_response.body, "tiny_cat.txt has been created"
+
+    get "/"
+    assert_includes last_response.body, "tiny_cat.txt"
+  end
 end
