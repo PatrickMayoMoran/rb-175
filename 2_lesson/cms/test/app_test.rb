@@ -121,4 +121,10 @@ class AppTest < Minitest::Test
     get "/"
     assert_includes last_response.body, "tiny_cat.txt"
   end
+
+  def test_create_document_with_no_name
+    post "/new", new: ""
+    assert_equal 422, last_response.status
+    assert_includes last_response.body, "A name is required"
+  end
 end
