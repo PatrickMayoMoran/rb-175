@@ -102,4 +102,12 @@ class AppTest < Minitest::Test
     assert_equal 200, last_response.status
     assert_includes last_response.body, "new content"
   end
+  
+  def test_view_new_document_form
+    get "/new"
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, "<input"
+    assert_includes last_response.body, %q(<button type="submit")
+  end
 end
