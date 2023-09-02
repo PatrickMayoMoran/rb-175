@@ -116,7 +116,7 @@ class AppTest < Minitest::Test
     assert_equal 302, last_response.status
 
     get last_response["Location"]
-    assert_includes last_response.body, "tiny_cat.txt has been created"
+    assert_includes last_response.body, "tiny_cat.txt was created"
 
     get "/"
     assert_includes last_response.body, "tiny_cat.txt"
