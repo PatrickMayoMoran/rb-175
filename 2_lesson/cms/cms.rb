@@ -70,11 +70,12 @@ get "/:filename/edit" do
 end
 
 post "/new" do
-
   document = params[:new].strip
+
   if document.empty?
     session[:message] = "A name is required"
-    redirect "/new"
+    status 422
+    erb :new
   else
     file_path = File.join(data_path, document)
 
