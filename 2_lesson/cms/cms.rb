@@ -36,7 +36,7 @@ def load_file_content(path)
 end
 
 get "/" do
-  redirect "/users/signin" unless session[:signed_in] == true
+  redirect "/users/signin" unless session[:username]
 
   pattern = File.join(data_path, "*")
   @files = Dir.glob(pattern).map do |path|
@@ -47,6 +47,9 @@ end
 
 get "/users/signin" do
   erb :signin
+end
+
+post "/users/signout" do
 end
 
 post "/users/signin" do
