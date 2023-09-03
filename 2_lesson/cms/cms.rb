@@ -54,7 +54,7 @@ post "/users/signin" do
   password = params[:password]
 
   if username == "admin" && password == "secret"
-    session[:signed_in] = true
+    session[:username] = "admin"
     session[:message] = "Welcome!"
     redirect "/"
   else
