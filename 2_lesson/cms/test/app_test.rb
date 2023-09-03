@@ -6,6 +6,9 @@ require 'fileutils'
 
 require_relative "../cms.rb"
 
+def sign_in
+  post "/users/signin", username: "admin", password: "secret"
+end
 def create_document(name, content = "")
   File.open(File.join(data_path, name), "w") do |file|
     file.write(content)
@@ -139,5 +142,27 @@ class AppTest < Minitest::Test
 
     get "/"
     refute_includes last_response.body, "tiny_cat.txt has been deleted"
+  end
+
+  def test_sign_in_form
+    get "/users/signin"
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, "<input"
+    assert_includes last_response.body, %q(<button type="submit")
+  end
+
+  def test_sign_in_admin
+    sign_in
+
+    assert_equal 302, last_response.status
+    assert_includes last_response.body, "Welcome"
+    assert_includes last_response.body, "Signed in as admin"
+  end
+
+  def test_sign_in_invalid
+  end
+
+  def test_sign_out
   end
 end
