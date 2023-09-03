@@ -49,6 +49,20 @@ get "/users/signin" do
   erb :signin
 end
 
+post "/users/signin" do
+  username = params[:username]
+  password = params[:password]
+
+  if username == "admin" && password == "secret"
+    session[:signed_in] = true
+    session[:message] = "Welcome!"
+    redirect "/"
+  else
+    session[:message] = "Invalid credentials"
+    erb :signin
+  end
+end
+
 get "/new" do
   erb :new
 end
