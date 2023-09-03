@@ -127,4 +127,17 @@ class AppTest < Minitest::Test
     assert_equal 422, last_response.status
     assert_includes last_response.body, "A name is required"
   end
+
+  def test_delete_file
+    post "/new", new: "tiny_cat.txt"
+
+    post "/tiny_cat.txt/delete"
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_includes last_response.body, "tiny_cat.txt has been deleted"
+
+    get "/"
+    refute_includes last_response.body, "tiny_cat.txt has been deleted"
+  end
 end

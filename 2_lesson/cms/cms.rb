@@ -75,7 +75,7 @@ post "/:filename/delete" do
   
   FileUtils.rm(file_path)
   session[:message] = "#{filename} has been deleted."
-  erb :index
+  redirect "/"
 end
 
 post "/new" do
