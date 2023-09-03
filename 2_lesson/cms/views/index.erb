@@ -12,7 +12,7 @@
 
 <p><a href="/new">New Document</a></p>
 
-<% if sessions[:username] %>
+<% if session[:username] %>
 <form method="post" action="/users/signout">
   <label for="signout"></i>Signed in as <%= sessions[:username] %>.</i>
     <button type="submit">Sign Out</button>
