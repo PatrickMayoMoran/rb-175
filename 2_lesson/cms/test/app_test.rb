@@ -154,8 +154,9 @@ class AppTest < Minitest::Test
 
   def test_sign_in_admin
     sign_in
-
     assert_equal 302, last_response.status
+
+    get last_response["Location"]
     assert_includes last_response.body, "Welcome"
     assert_includes last_response.body, "Signed in as admin"
   end
