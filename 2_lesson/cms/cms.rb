@@ -69,6 +69,15 @@ get "/:filename/edit" do
   erb :edit
 end
 
+post "/:filename/delete" do
+  filename = params[:filename]
+  file_path = File.join(data_path, params[:filename])
+  
+  FileUtils.rm(file_path)
+  session[:message] = "#{filename} has been deleted."
+  erb :index
+end
+
 post "/new" do
   document = params[:new].strip
 
