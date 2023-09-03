@@ -14,7 +14,7 @@
 
 <% if session[:username] %>
 <form method="post" action="/users/signout">
-  <label for="signout"></i>Signed in as <%= sessions[:username] %>.</i>
+  <label for="signout"></i>Signed in as <%= session[:username] %>.</i>
     <button type="submit">Sign Out</button>
   </label>
 </form>
