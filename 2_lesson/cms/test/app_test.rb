@@ -122,6 +122,13 @@ class AppTest < Minitest::Test
     assert_includes last_response.body, %q(<button type="submit")
   end
 
+  def test_view_new_document_form_signed_out
+    get "/new"
+
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_create_new_document
     post "/new", {new: "tiny_cat.txt"}, admin_session
     assert_equal 302, last_response.status
