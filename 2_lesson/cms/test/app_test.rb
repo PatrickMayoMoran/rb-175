@@ -138,6 +138,13 @@ class AppTest < Minitest::Test
     assert_includes last_response.body, "tiny_cat.txt"
   end
 
+  def test_create_new_document_signed_out
+    post "/new", {new: "tiny_cat.txt"}
+
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_create_document_with_no_name
     post "/new", {new: ""}, admin_session
     assert_equal 422, last_response.status
