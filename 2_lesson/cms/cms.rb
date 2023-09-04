@@ -79,6 +79,8 @@ post "/users/signin" do
 end
 
 get "/new" do
+  require_sign_in
+
   erb :new
 end
 
@@ -96,6 +98,8 @@ get "/:filename" do
 end
 
 get "/:filename/edit" do
+  require_sign_in
+
   file_path = File.join(data_path, params[:filename])
 
   @filename = params[:filename]
@@ -105,6 +109,8 @@ get "/:filename/edit" do
 end
 
 post "/:filename/delete" do
+  require_sign_in
+
   filename = params[:filename]
   file_path = File.join(data_path, params[:filename])
   
@@ -114,6 +120,8 @@ post "/:filename/delete" do
 end
 
 post "/new" do
+  require_sign_in
+
   document = params[:new].strip
 
   if document.empty?
@@ -130,6 +138,8 @@ post "/new" do
 end
 
 post "/:filename" do
+  require_sign_in
+
   file_path = File.join(data_path, params[:filename])
 
   File.write(file_path, params[:content])
