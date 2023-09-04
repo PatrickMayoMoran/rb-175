@@ -53,7 +53,7 @@ class AppTest < Minitest::Test
 
   def test_history
     create_document "history.txt"
-    get "/history.txt", {}, admin_session
+    get "/history.txt"
 
     path = data_path
     file = File.read(File.join(path, "history.txt"))
