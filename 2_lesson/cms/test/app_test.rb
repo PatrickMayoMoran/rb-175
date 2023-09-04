@@ -162,6 +162,16 @@ class AppTest < Minitest::Test
     refute_includes last_response.body, %q(href="tiny_cat.txt")
   end
 
+  def test_delete_file_signed_out
+    post "/new", {new: "tiny_cat.txt"}, admin_session
+    post "/users/signout"
+
+    post "/tiny_cat.txt/delete"
+
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_sign_in_form
     get "/users/signin"
 
