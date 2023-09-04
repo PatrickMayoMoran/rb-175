@@ -139,9 +139,9 @@ class AppTest < Minitest::Test
   end
 
   def test_sign_in_admin
-    sign_in
+    post "/users/signin", username: "admin", password: "secret"
     assert_equal 302, last_response.status
-    assert_equal "Welcome", session[:message]
+    assert_equal "Welcome!", session[:message]
     assert_equal "admin", session[:username]
 
     get last_response["Location"]
@@ -156,13 +156,14 @@ class AppTest < Minitest::Test
   end
 
   def test_sign_out
-    sign_in
+    get "/", {}, {"rack.session" => { username: "admin"} }
+    assert_includes last_response.body, "Signed in as admin"
 
     post "/users/signout"
-    assert_equal 302, last_response.status
+    assert_equal "You have been signed out.", session[:message]
 
     get last_response["Location"]
-    assert_includes last_response.body, "You have been signed out"
+    assert_nil session[:username]
     assert_includes last_response.body, "Sign In"
   end
 end
