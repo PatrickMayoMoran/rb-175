@@ -36,7 +36,7 @@ def load_file_content(path)
 end
 
 get "/" do
-  redirect "/users/signin" unless session[:username]
+  # redirect "/users/signin" unless session[:username]
 
   pattern = File.join(data_path, "*")
   @files = Dir.glob(pattern).map do |path|

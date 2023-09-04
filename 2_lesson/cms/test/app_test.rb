@@ -63,7 +63,7 @@ class AppTest < Minitest::Test
     get "not_a_document.txt"
 
     assert_equal(302, last_response.status)
-    assert_equal "not_a_document.txt does not exist", session[:message]
+    assert_equal "not_a_document.txt does not exist.", session[:message]
   end
 
 # test/cms_test.rb
@@ -89,10 +89,7 @@ class AppTest < Minitest::Test
     post "/changes.txt", content: "new content"
 
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-
-    assert_includes last_response.body, "changes.txt has been updated"
+    assert_equal "changes.txt has been updated.", session[:message]
 
     get "/changes.txt"
     assert_equal 200, last_response.status
@@ -110,9 +107,7 @@ class AppTest < Minitest::Test
   def test_create_new_document
     post "/new", new: "tiny_cat.txt"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-    assert_includes last_response.body, "tiny_cat.txt was created"
+    assert_equal "tiny_cat.txt was created.", session[:message]
 
     get "/"
     assert_includes last_response.body, "tiny_cat.txt"
@@ -129,12 +124,10 @@ class AppTest < Minitest::Test
 
     post "/tiny_cat.txt/delete"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-    assert_includes last_response.body, "tiny_cat.txt has been deleted"
+    assert_equal "tiny_cat.txt has been deleted.", session[:message]
 
     get "/"
-    refute_includes last_response.body, "tiny_cat.txt has been deleted"
+    refute_includes last_response.body, %q(href="tiny_cat.txt")
   end
 
   def test_sign_in_form
@@ -148,9 +141,10 @@ class AppTest < Minitest::Test
   def test_sign_in_admin
     sign_in
     assert_equal 302, last_response.status
+    assert_equal "Welcome", session[:message]
+    assert_equal "admin", session[:username]
 
     get last_response["Location"]
-    assert_includes last_response.body, "Welcome"
     assert_includes last_response.body, "Signed in as admin"
   end
 
