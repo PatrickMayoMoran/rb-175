@@ -50,6 +50,17 @@ def user_signed_in?
   session.key?(:username)
 end
 
+def valid_credentials?(username, password)
+  credentials = load_user_credentials
+
+  if credentials.key?(username) 
+    bcrypt_password = BCrypt::Password.new(credentials[username])
+    bcrypt_password == password
+  else
+    false
+  end
+end
+
 def require_sign_in
   unless user_signed_in?
     session[:message] = "You must be signed in to do that."
@@ -76,11 +87,9 @@ post "/users/signout" do
 end
 
 post "/users/signin" do
-  credentials = load_user_credentials
   username = params[:username]
-  hashed_password = BCrypt::Password.new(credentials[:username])
 
-  if credentials.key?(username) && hashed_password == params[:password]
+  if valid_credentials?(username, params[:password])
     session[:username] = username
     session[:message] = "Welcome!"
     redirect "/"
