@@ -6,6 +6,10 @@ require 'fileutils'
 
 require_relative "../cms.rb"
 
+def admin_session
+  {"rack.session" => { username: "admin" } }
+end
+
 def session
   last_request.env["rack.session"]
 end
