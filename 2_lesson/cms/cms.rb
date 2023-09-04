@@ -34,8 +34,12 @@ def load_file_content(path)
   end
 end
 
+def user_signed_in?
+  session.key?(:username)
+end
+
 def require_sign_in
-  unless session[:username]
+  unless user_signed_in?
     session[:message] = "You must be signed in to do that."
     redirect "/" 
   end
