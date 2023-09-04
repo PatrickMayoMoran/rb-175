@@ -79,6 +79,14 @@ class AppTest < Minitest::Test
     assert_includes last_response.body, "<h1>Ruby is...</h1>"
   end
 
+  def test_edit_document_signed_out
+    create_document "changes.txt"
+    get "/changes.txt/edit"
+
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_editing_document
     create_document "changes.txt"
     get "/changes.txt/edit", {}, admin_session
