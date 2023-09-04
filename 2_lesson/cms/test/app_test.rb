@@ -64,7 +64,7 @@ class AppTest < Minitest::Test
   end
 
   def test_document_not_found
-    get "not_a_document.txt", {}, admin_session
+    get "not_a_document.txt"
 
     assert_equal(302, last_response.status)
     assert_equal "not_a_document.txt does not exist.", session[:message]
