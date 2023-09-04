@@ -163,9 +163,7 @@ class AppTest < Minitest::Test
   end
 
   def test_delete_file_signed_out
-    post "/new", {new: "tiny_cat.txt"}, admin_session
-    post "/users/signout"
-
+    create_document("tiny_cat.txt")
     post "/tiny_cat.txt/delete"
 
     assert_equal 302, last_response.status
