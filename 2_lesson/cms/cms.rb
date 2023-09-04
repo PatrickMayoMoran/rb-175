@@ -75,11 +75,11 @@ post "/users/signout" do
 end
 
 post "/users/signin" do
+  credentials = load_user_credentials
   username = params[:username]
-  password = params[:password]
 
-  if username == "admin" && password == "secret"
-    session[:username] = "admin"
+  if credentials.key?(username) && credentials[username] == params[:password]
+    session[:username] = username
     session[:message] = "Welcome!"
     redirect "/"
   else
