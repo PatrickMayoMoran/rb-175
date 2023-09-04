@@ -106,7 +106,14 @@ class AppTest < Minitest::Test
     assert_equal 200, last_response.status
     assert_includes last_response.body, "new content"
   end
-  
+
+  def test_updating_document_signed_out
+    post "/changes.txt", {content: "new content"}
+
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_view_new_document_form
     get "/new", {}, admin_session
 
