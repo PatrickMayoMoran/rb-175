@@ -10,7 +10,6 @@ configure do
   # set :erb, :escape_html => true
 end
 
-# cms.rb
 def data_path
   if ENV["RACK_ENV"] == "test"
     File.expand_path("../test/data", __FILE__)
@@ -35,9 +34,14 @@ def load_file_content(path)
   end
 end
 
-get "/" do
-  # redirect "/users/signin" unless session[:username]
+def require_sign_in
+  unless session[:username]
+    session[:message] = "You must be signed in to do that."
+    redirect "/" 
+  end
+end
 
+get "/" do
   pattern = File.join(data_path, "*")
   @files = Dir.glob(pattern).map do |path|
     File.basename(path)
