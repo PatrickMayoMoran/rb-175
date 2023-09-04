@@ -6,9 +6,10 @@ require 'fileutils'
 
 require_relative "../cms.rb"
 
-def sign_in
-  post "/users/signin", username: "admin", password: "secret"
+def session
+  last_request.env["rack.session"]
 end
+
 def create_document(name, content = "")
   File.open(File.join(data_path, name), "w") do |file|
     file.write(content)
@@ -62,14 +63,7 @@ class AppTest < Minitest::Test
     get "not_a_document.txt"
 
     assert_equal(302, last_response.status)
-
-    get last_response["Location"]
-
-    assert_equal(200, last_response.status)
-    assert_includes(last_response.body, "not_a_document.txt does not exist")
-
-    get "/"
-    refute_includes(last_response.body, "not_a_document.txt does not exist")
+    assert_equal "not_a_document.txt does not exist", session[:message]
   end
 
 # test/cms_test.rb
@@ -82,7 +76,6 @@ class AppTest < Minitest::Test
     assert_includes last_response.body, "<h1>Ruby is...</h1>"
   end
 
-# test/cms_test.rb
   def test_editing_document
     create_document "changes.txt"
     get "/changes.txt/edit"
