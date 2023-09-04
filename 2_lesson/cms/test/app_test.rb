@@ -162,8 +162,20 @@ class AppTest < Minitest::Test
   end
 
   def test_sign_in_invalid
+    post "/users/signin", username: "meow", password: "cat"
+
+    assert_equal 422, last_response.status
+    assert_includes last_response.body, "Invalid credentials"
   end
 
   def test_sign_out
+    sign_in
+
+    post "/users/signout"
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_includes last_response.body, "You have been signed out"
+    assert_includes last_response.body, "Sign In"
   end
 end

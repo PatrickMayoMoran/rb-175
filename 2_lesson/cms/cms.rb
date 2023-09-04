@@ -65,6 +65,7 @@ post "/users/signin" do
     redirect "/"
   else
     session[:message] = "Invalid credentials"
+    status 422
     erb :signin
   end
 end
