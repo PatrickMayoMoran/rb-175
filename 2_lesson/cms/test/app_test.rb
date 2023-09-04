@@ -70,10 +70,9 @@ class AppTest < Minitest::Test
     assert_equal "not_a_document.txt does not exist.", session[:message]
   end
 
-# test/cms_test.rb
   def test_viewing_markdown_document
     create_document("about.md", "# Ruby is...")
-    get "/about.md", {}, admin_session
+    get "/about.md"
 
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
