@@ -41,7 +41,7 @@ class AppTest < Minitest::Test
       create_document(file)
     end
 
-    get "/"
+    get "/", {}, admin_session
 
     assert_equal(200, last_response.status)
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
@@ -53,7 +53,7 @@ class AppTest < Minitest::Test
 
   def test_history
     create_document "history.txt"
-    get "/history.txt"
+    get "/history.txt", {}, admin_session
 
     path = data_path
     file = File.read(File.join(path, "history.txt"))
@@ -64,7 +64,7 @@ class AppTest < Minitest::Test
   end
 
   def test_document_not_found
-    get "not_a_document.txt"
+    get "not_a_document.txt", {}, admin_session
 
     assert_equal(302, last_response.status)
     assert_equal "not_a_document.txt does not exist.", session[:message]
@@ -73,7 +73,7 @@ class AppTest < Minitest::Test
 # test/cms_test.rb
   def test_viewing_markdown_document
     create_document("about.md", "# Ruby is...")
-    get "/about.md"
+    get "/about.md", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
@@ -82,7 +82,7 @@ class AppTest < Minitest::Test
 
   def test_editing_document
     create_document "changes.txt"
-    get "/changes.txt/edit"
+    get "/changes.txt/edit", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<textarea"
@@ -90,7 +90,7 @@ class AppTest < Minitest::Test
   end
 
   def test_updating_document
-    post "/changes.txt", content: "new content"
+    post "/changes.txt", {content: "new content"}, admin_session
 
     assert_equal 302, last_response.status
     assert_equal "changes.txt has been updated.", session[:message]
@@ -101,7 +101,7 @@ class AppTest < Minitest::Test
   end
   
   def test_view_new_document_form
-    get "/new"
+    get "/new", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<input"
@@ -109,7 +109,7 @@ class AppTest < Minitest::Test
   end
 
   def test_create_new_document
-    post "/new", new: "tiny_cat.txt"
+    post "/new", {new: "tiny_cat.txt"}, admin_session
     assert_equal 302, last_response.status
     assert_equal "tiny_cat.txt was created.", session[:message]
 
@@ -118,13 +118,13 @@ class AppTest < Minitest::Test
   end
 
   def test_create_document_with_no_name
-    post "/new", new: ""
+    post "/new", {new: ""}, admin_session
     assert_equal 422, last_response.status
     assert_includes last_response.body, "A name is required"
   end
 
   def test_delete_file
-    post "/new", new: "tiny_cat.txt"
+    post "/new", {new: "tiny_cat.txt"}, admin_session
 
     post "/tiny_cat.txt/delete"
     assert_equal 302, last_response.status
@@ -160,7 +160,7 @@ class AppTest < Minitest::Test
   end
 
   def test_sign_out
-    get "/", {}, {"rack.session" => { username: "admin"} }
+    get "/", {}, admin_session
     assert_includes last_response.body, "Signed in as admin"
 
     post "/users/signout"
