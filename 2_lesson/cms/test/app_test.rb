@@ -41,7 +41,7 @@ class AppTest < Minitest::Test
       create_document(file)
     end
 
-    get "/", {}, admin_session
+    get "/"
 
     assert_equal(200, last_response.status)
     assert_equal("text/html;charset=utf-8", last_response["Content-Type"])
